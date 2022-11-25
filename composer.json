@@ -3,10 +3,10 @@
         "league/csv": "^9.0"
     },
     "autoload": {
-        "psr-0": {
-            "Input":  "Input/",
-            "Output": "Output/",
-            "Transformers": "Transformers/"
+        "psr-4": {
+            "Input\\":  "Input",
+            "Output\\": "Output",
+            "Transformers\\": "Transformers"
         }
     }
 }

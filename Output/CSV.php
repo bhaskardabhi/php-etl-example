@@ -4,11 +4,11 @@ namespace Output;
 use League\Csv\Writer;
 
 class CSV extends Base{
-    public function save(){
+    public function save($destination) : bool{
         $data = $this->getData();
 
         // We create the CSV into memory
-        $csv = Writer::createFromFileObject(new SplTempFileObject());
+        $csv = Writer::createFromPath($destination, 'w+');
         
         if(count($data)){
             $csv->insertOne(array_keys($data[0]));
@@ -18,7 +18,7 @@ class CSV extends Base{
             $csv->insertOne($current);
         }
 
-        $csv->output($this->getOutputDestination());
+        $csv->output($destination);
 
         return true;
     }

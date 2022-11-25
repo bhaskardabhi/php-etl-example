@@ -2,9 +2,11 @@
 namespace Output;
 
 class JSON extends Base{
-    public function save(){
+    public function save($destination) : bool{
         $data = $this->getData();
 
-        return file_put_contents($this->getOutputDestination(), json_encode($data));
+        file_put_contents($destination, json_encode($data));
+
+        return true;
     }
 }

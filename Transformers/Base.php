@@ -22,9 +22,19 @@ abstract class Base{
      * Kind of call the output class to tell him to save
      */
     private function save($destionation, $args){
+        if (!isset(self::$registory[$destionation])) {
+			throw new \BadMethodCallException("Method not registered");
+		}
+
         $this->transformedData = $this->transform();
-        
-        return (new $registory[$method]($this->transformedData))->save($args);
+
+        return (new self::$registory[$destionation]($this->transformedData))->save($args[0]);
+    }
+
+    public function getData(){
+        $this->transformedData = $this->source->getData();
+
+        return $this->transformedData;
     }
 
     public function register($type, $class){
@@ -41,15 +51,12 @@ abstract class Base{
     public function __call($method, $args)
 	{
         $magicMethodPrefixLength = strlen($this->magicMethodPrefix);
-		if (substr($method, 0, $magicMethodPrefixLength) === $this->magicMethodPrefix) {
+
+		if (substr($method, 0, $magicMethodPrefixLength) !== $this->magicMethodPrefix) {
 			throw new \BadMethodCallException();
 		}
 
         $method = substr($method, $magicMethodPrefixLength, strlen($method) - $magicMethodPrefixLength);
-
-        if (!isset($registory[$method])) {
-			throw new \BadMethodCallException("Method not registered");
-		}
 
 		return $this->save($method, $args);
 	}

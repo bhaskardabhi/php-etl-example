@@ -1,1 +1,4 @@
 vendor/
+*.csv
+*.json
+!composer.json

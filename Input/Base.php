@@ -3,7 +3,7 @@ namespace Input;
 
 abstract class Base{
     private $source;
-    private array $data;
+    private array $data = [];
 
     public function __construct($source = null){
         $this->source = $source;
@@ -14,9 +14,7 @@ abstract class Base{
      * It call the subclass's `extract` abstract method and return the data
      */
     public function getData(){
-        if(is_null($this->data)){
-            $this->data = $this->extract();
-        }
+        $this->data = $this->extract();
 
         return $this->data;
     }
